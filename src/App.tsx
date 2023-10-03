@@ -1,11 +1,15 @@
 /** @format */
 
-import "./assets/App.css";
-import { Route, Routes, useRoutes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import ProductList from "./pages/ProductList";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
+import { ToastContainer } from "react-toastify";
+
+const ProductList = lazy(() => import("./pages/ProductList"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Cart = lazy(() => import("./pages/Cart"));
+const PostList = lazy(() => import("./pages/PostList"));
+const Post = lazy(() => import("./components/Post"));
 
 function App() {
   return (
@@ -16,7 +20,9 @@ function App() {
           path="/"
           element={
             <MainLayout>
-              <ProductList />
+              <Suspense>
+                <ProductList />
+              </Suspense>
             </MainLayout>
           }
         />
@@ -26,7 +32,9 @@ function App() {
           path="/product/:id"
           element={
             <MainLayout>
-              <ProductDetail />
+              <Suspense>
+                <ProductDetail />
+              </Suspense>
             </MainLayout>
           }
         />
@@ -36,11 +44,56 @@ function App() {
           path="/cart"
           element={
             <MainLayout>
-              <Cart />
+              <Suspense>
+                <Cart />
+              </Suspense>
+            </MainLayout>
+          }
+        />
+
+        {/* Post */}
+        <Route
+          path="/post"
+          element={
+            <MainLayout>
+              <Suspense>
+                <PostList />
+              </Suspense>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/post/category/:category"
+          element={
+            <MainLayout>
+              <Suspense>
+                <PostList />
+              </Suspense>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/post/:id"
+          element={
+            <MainLayout>
+              <Suspense>
+                <Post />
+              </Suspense>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/post/:product/:id"
+          element={
+            <MainLayout>
+              <Suspense>
+                <Post />
+              </Suspense>
             </MainLayout>
           }
         />
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

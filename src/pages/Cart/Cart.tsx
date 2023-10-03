@@ -3,7 +3,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Link } from "react-router-dom";
-import { removeFromCart } from "../../redux/cart.reducer";
+import { removeFromCart } from "../../redux/cart.slice";
 
 export default function Cart() {
   const carts = useSelector((state: RootState) => state.cartReducer.cart);
@@ -58,7 +58,7 @@ export default function Cart() {
                       <div className="flex-grow">
                         <div className="flex">
                           <Link
-                            className="h-20 w-20 flex-shrink-0"
+                            className="h-20 w-20 flex-shrink-0 overflow-hidden"
                             to={`/product/${purchase.id}`}
                           >
                             <img alt={purchase.name} src={purchase.img} />

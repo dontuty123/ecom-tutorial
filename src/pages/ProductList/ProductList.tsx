@@ -11,7 +11,7 @@ export default function ProductList() {
   );
 
   return (
-    <div className="container">
+    <div className="container py-5">
       <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-[5px]">
         {productList.map((product) => (
           <Product product={product} key={product.id} />

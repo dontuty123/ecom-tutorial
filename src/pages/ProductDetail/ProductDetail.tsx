@@ -5,27 +5,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { ProductType } from "../../types/product.type";
-import { addToCart } from "../../redux/cart.reducer";
+import { addToCart } from "../../redux/cart.slice";
 import { CartType } from "../../types/cart.type";
+import { postData } from "../../mockdata/post";
+import { addPost } from "../../redux/post.slice";
+import { toast } from "react-toastify";
 
 export default function ProductDetail() {
+  const [reviewTitle, setReviewTitle] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
   const [product, setProduct] = useState<ProductType>({
     id: "",
-    img: [],
+    img: "",
     category: "",
     name: "",
     desc: "",
     sold: 0,
-    review: [],
     price: 0,
     inStock: 0,
   });
-  const [inputNumber, setInputNumber] = useState(1);
-  const dispatch = useDispatch();
-
   const products = useSelector(
     (state: RootState) => state.productReducer.products
   );
+
+  const [inputNumber, setInputNumber] = useState(1);
+  const dispatch = useDispatch();
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -47,11 +52,12 @@ export default function ProductDetail() {
   const handleAddToCart = () => {
     const addProduct: CartType = {
       id: product.id,
-      img: product?.img[0],
+      img: product?.img,
       name: product.name,
       quantity: inputNumber,
       price: product.price,
     };
+    toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
     dispatch(addToCart(addProduct));
   };
 
@@ -59,6 +65,39 @@ export default function ProductDetail() {
   function restrictToNumbers(event: ChangeEvent<HTMLInputElement>) {
     event.target.value = event.target.value.replace(/[^0-9]/g, "");
   }
+
+  //handle Review
+  const handleReviewTitleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setReviewTitle(event.target.value);
+  };
+
+  const handleReviewContentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setReviewContent(event.target.value);
+  };
+
+  const handleSubmitReview = () => {
+    const newId = postData.length + 1;
+    const publishPost = {
+      id: newId.toString(),
+      productId: product.id,
+      category: product.category,
+      name: reviewTitle,
+      review: reviewContent,
+      img: product.img,
+    };
+    if (reviewTitle == "" && reviewContent == "") {
+      toast.dark("Vui lòng điền đầy đủ thông tin");
+    } else {
+      dispatch(addPost(publishPost));
+      toast.success("Đã thêm review thành công");
+      setReviewTitle("");
+      setReviewContent("");
+    }
+  };
 
   return (
     <div className="bg-gray-100 py-6">
@@ -69,7 +108,7 @@ export default function ProductDetail() {
               <div className="relative pt-[100%] w-full shadow">
                 <img
                   className="absolute top-0 left-0 w-full h-full bg-white object-cover"
-                  src={product?.img[0]}
+                  src={product?.img}
                   alt={product?.name}
                 />
               </div>
@@ -184,11 +223,39 @@ export default function ProductDetail() {
                     Mua ngay
                   </button>
                 </Link>
+                <Link to={`/post/product/${product.id}`}>
+                  <button className="bg-[#D0011B] text-white px-10 py-3 ml-5 cursor-pointer">
+                    Xem Review
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
           <span className="text-[24px] mb-7">Thông tin chi tiết</span>
           <div className="mt-10 bg-white text-sm w-[80%]">{product?.desc}</div>
+          <div className="mt-7">
+            <span className="text-xl mb-3 block">Đánh giá sản phẩm</span>
+            <input
+              type="text"
+              placeholder="Tiêu đề bài đánh giá"
+              value={reviewTitle}
+              onChange={handleReviewTitleChange}
+              className="w-full border p-2 rounded-md mb-3"
+            />
+            <textarea
+              rows={4}
+              placeholder="Nội dung bài đánh giá"
+              value={reviewContent}
+              onChange={handleReviewContentChange}
+              className="w-full border p-2 rounded-md"
+            />
+            <button
+              className="bg-[#D0011B] text-white px-10 py-3 mt-3 cursor-pointer"
+              onClick={handleSubmitReview}
+            >
+              Đăng đánh giá
+            </button>
+          </div>
         </div>
       </div>
     </div>

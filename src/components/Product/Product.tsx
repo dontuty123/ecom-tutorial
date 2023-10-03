@@ -13,7 +13,7 @@ export default function Product({ product }: PropType) {
       <div className="overflow-hidden rounded-sm bg-white shadow hover:translate-y-[-0.05rem] hover:shadow-md cursor-pointer">
         <div className="relative w-full pt-[100%]">
           <img
-            src={product.img[0]}
+            src={product.img}
             alt={product.name}
             className="absolute top-0 left-0 h-full w-full bg-white object-cover"
           />
