@@ -82,9 +82,6 @@ export default function Cart() {
                     <div className="grid grid-cols-5 items-center">
                       <div className="col-span-2">
                         <div className="flex items-center justify-center">
-                          {/* <span className="text-gray-300 line-through">
-                            ₫{purchase.price}
-                          </span> */}
                           <span className="ml-3">₫{purchase.price}</span>
                         </div>
                       </div>

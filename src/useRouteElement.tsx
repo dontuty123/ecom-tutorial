@@ -57,6 +57,14 @@ export default function useRouteElement() {
           ),
         },
         {
+          path: "/post/:id",
+          element: (
+            <Suspense>
+              <Post />,
+            </Suspense>
+          ),
+        },
+        {
           path: "/post/:product/:id",
           element: (
             <Suspense>

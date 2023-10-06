@@ -12,7 +12,7 @@ export const postData = [
 
   {
     id: "2",
-    productId: "3",
+    productId: "13",
     category: "dong ho",
     name: "Rolex Datejust chế tác từ Oystersteel và vàng, M126233-0039 | DAFC Vietnam",
     review:

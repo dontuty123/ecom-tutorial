@@ -123,7 +123,7 @@ export default function ProductDetail() {
               </div>
               <div className="px-5 py-4 text-orange">
                 <span className="text-[24px]">₫</span>
-                <span className="text-[32px]">{product.price}</span>
+                <span className="text-[32px]">{product?.price}</span>
               </div>
               <div className="pt-4 grid grid-cols-8 px-5 text-gray-600">
                 <span className="col-span-2 text-base">Số lượng</span>
@@ -223,7 +223,7 @@ export default function ProductDetail() {
                     Mua ngay
                   </button>
                 </Link>
-                <Link to={`/post/product/${product.id}`}>
+                <Link to={`/post/product/${product?.id}`}>
                   <button className="bg-[#D0011B] text-white px-10 py-3 ml-5 cursor-pointer">
                     Xem Review
                   </button>

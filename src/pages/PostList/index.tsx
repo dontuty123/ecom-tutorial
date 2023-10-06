@@ -82,8 +82,6 @@ export default function PostList() {
             </div>
           </div>
         ))}
-
-        {/* Thêm các card bài viết khác tương tự ở đây */}
       </div>
     </div>
   );
