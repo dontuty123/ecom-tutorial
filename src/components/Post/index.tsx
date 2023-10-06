@@ -2,8 +2,8 @@
 
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from "../../redux/store";
-import { PostType } from "../../types/post.type";
+import { RootState } from "src/redux/store";
+import { PostType } from "src/types/post.type";
 
 export default function Post() {
   const { product, id } = useParams();
@@ -25,7 +25,6 @@ export default function Post() {
           className="bg-white rounded-lg shadow-md p-6 overflow-hidden mb-10"
           key={item.id}
         >
-          {/* Thêm ảnh nhỏ vào chi tiết bài viết */}
           <div className="w-[50%] h-[50vh] mb-10">
             <img
               alt={item.name}
@@ -34,7 +33,6 @@ export default function Post() {
             />
           </div>
 
-          {/* Thông tin chi tiết của bài viết */}
           <h2 className="text-xl font-semibold text-gray-800">{item.name}</h2>
           <p className="text-gray-600 mt-2 max-w-[70%]">{item.review}</p>
         </div>

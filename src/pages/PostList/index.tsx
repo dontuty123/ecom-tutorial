@@ -1,10 +1,10 @@
 /** @format */
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { PostType } from "../../types/post.type";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { RootState } from "src/redux/store";
+import { PostType } from "src/types/post.type";
 
 export default function PostList() {
   const posts = useSelector((state: RootState) => state.postReducer.posts);

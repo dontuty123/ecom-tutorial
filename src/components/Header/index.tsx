@@ -2,7 +2,7 @@
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { RootState } from "../../redux/store";
+import { RootState } from "src/redux/store";
 
 export default function Header() {
   const cart = useSelector((state: RootState) => state.cartReducer.cart);

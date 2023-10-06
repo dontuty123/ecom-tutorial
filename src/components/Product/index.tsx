@@ -1,7 +1,7 @@
 /** @format */
 
 import { Link } from "react-router-dom";
-import { ProductType } from "../../types/product.type";
+import { ProductType } from "src/types/product.type";
 
 interface PropType {
   product: ProductType;
@@ -10,7 +10,7 @@ interface PropType {
 export default function Product({ product }: PropType) {
   return (
     <Link to={`/product/${product.id}`}>
-      <div className="overflow-hidden rounded-sm bg-white shadow hover:translate-y-[-0.05rem] hover:shadow-md cursor-pointer">
+      <div className="overflow-hidden rounded-sm  shadow-md hover:translate-y-[-0.05rem] hover:shadow-md cursor-pointer">
         <div className="relative w-full pt-[100%]">
           <img
             src={product.img}

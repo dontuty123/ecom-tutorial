@@ -1,8 +1,8 @@
 /** @format */
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { PostType } from "../types/post.type";
-import { postData } from "../mockdata/post";
+import { postData } from "src/mockdata/post";
+import { PostType } from "src/types/post.type";
 
 interface PostsType {
   posts: PostType[];

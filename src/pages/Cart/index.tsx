@@ -1,9 +1,9 @@
 /** @format */
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { Link } from "react-router-dom";
-import { removeFromCart } from "../../redux/cart.slice";
+import { RootState } from "src/redux/store";
+import { removeFromCart } from "src/redux/cart.slice";
 
 export default function Cart() {
   const carts = useSelector((state: RootState) => state.cartReducer.cart);
@@ -13,10 +13,13 @@ export default function Cart() {
     dispatch(removeFromCart(id));
   };
 
-  let totalPrice = 0;
-  for (const item of carts) {
-    totalPrice += item.quantity * item.price;
-  }
+  const countTotalPrice = () => {
+    let totalPrice = 0;
+    for (const item of carts) {
+      totalPrice += item.quantity * item.price;
+    }
+    return totalPrice;
+  };
 
   return (
     <div className="bg-neutral-100 py-16">
@@ -119,7 +122,9 @@ export default function Cart() {
             <div>
               <div className="flex items-center sm:justify-end">
                 <div>Tổng thanh toán ({carts.length} sản phẩm):</div>
-                <div className="ml-2 text-2xl text-orange">₫{totalPrice}</div>
+                <div className="ml-2 text-2xl text-orange">
+                  ₫{countTotalPrice()}
+                </div>
               </div>
               <div className="flex items-center text-sm sm:justify-end">
                 <div className="text-gray-500">Tiết kiệm</div>
