@@ -1,26 +1,43 @@
 /** @format */
 
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from "src/redux/store";
+import { getPostList } from "src/redux/post.slice";
+import { AppDispatch, RootState } from "src/redux/store";
 import { PostType } from "src/types/post.type";
 
 export default function Post() {
   const { product, id } = useParams();
   const posts = useSelector((state: RootState) => state.postReducer.posts);
+  const [postList, setPostList] = useState<PostType[]>();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const promise = dispatch(getPostList());
+    setPostList(posts);
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    setPostList(posts);
+  }, [posts]);
 
   var curPost: PostType[];
 
-  if (product) {
-    curPost = posts.filter((item) => item.productId === id);
-  } else curPost = posts.filter((item) => item.id === id) as PostType[];
+  if (product && postList) {
+    curPost = postList?.filter((item) => item.productId === id);
+  } else curPost = postList?.filter((item) => item.id === id) as PostType[];
 
+  console.log(curPost);
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold text-gray-800 mb-4">
         Chi tiết Bài viết
       </h1>
-      {curPost.map((item) => (
+      {curPost?.map((item) => (
         <div
           className="bg-white rounded-lg shadow-md p-6 overflow-hidden mb-10"
           key={item.id}

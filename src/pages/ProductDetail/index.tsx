@@ -4,10 +4,9 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { postData } from "src/mockdata/post";
 import { addToCart } from "src/redux/cart.slice";
 import { addPost } from "src/redux/post.slice";
-import { RootState } from "src/redux/store";
+import { AppDispatch, RootState } from "src/redux/store";
 import { CartType } from "src/types/cart.type";
 import { ProductType } from "src/types/product.type";
 
@@ -27,9 +26,9 @@ export default function ProductDetail() {
   const products = useSelector(
     (state: RootState) => state.productReducer.products
   );
+  const dispatch = useDispatch<AppDispatch>();
 
   const [inputNumber, setInputNumber] = useState(1);
-  const dispatch = useDispatch();
 
   const { id } = useParams();
 
@@ -80,9 +79,7 @@ export default function ProductDetail() {
   };
 
   const handleSubmitReview = () => {
-    const newId = postData.length + 1;
     const publishPost = {
-      id: newId.toString(),
       productId: product.id,
       category: product.category,
       name: reviewTitle,

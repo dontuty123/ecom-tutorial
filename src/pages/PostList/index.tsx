@@ -1,15 +1,29 @@
 /** @format */
 
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { RootState } from "src/redux/store";
+import { AppDispatch, RootState } from "src/redux/store";
 import { PostType } from "src/types/post.type";
+import { getPostList } from "src/redux/post.slice";
 
 export default function PostList() {
   const posts = useSelector((state: RootState) => state.postReducer.posts);
-  const [postList, setPostList] = useState<PostType[]>(posts);
+  const [postList, setPostList] = useState<PostType[]>();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const promise = dispatch(getPostList());
+    setPostList(posts);
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    setPostList(posts);
+  }, [posts]);
 
   const handleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
     var curPostList: PostType[] = [];
@@ -61,7 +75,7 @@ export default function PostList() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {/* Mỗi card bài viết */}
-        {postList.map((item) => (
+        {postList?.map((item) => (
           <div className="bg-white rounded-lg shadow-md" key={item.id}>
             <img
               src={item.img}

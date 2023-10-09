@@ -8,7 +8,7 @@ function App() {
   return (
     <div>
       {routeElement}
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </div>
   );
 }

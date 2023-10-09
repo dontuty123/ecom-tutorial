@@ -2,12 +2,20 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { RootState } from "src/redux/store";
-import { removeFromCart } from "src/redux/cart.slice";
+import { AppDispatch, RootState } from "src/redux/store";
+import { getPurchases, removeFromCart } from "src/redux/cart.slice";
+import { useEffect } from "react";
 
 export default function Cart() {
   const carts = useSelector((state: RootState) => state.cartReducer.cart);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const promise = dispatch(getPurchases());
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch]);
 
   const handleRemoveFromCart = (id: string) => {
     dispatch(removeFromCart(id));

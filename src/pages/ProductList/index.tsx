@@ -1,13 +1,23 @@
 /** @format */
 
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Product from "src/components/Product";
-import { RootState } from "src/redux/store";
+import { getproductList } from "src/redux/productList.slice";
+import { AppDispatch, RootState } from "src/redux/store";
 
 export default function ProductList() {
   const productList = useSelector(
     (state: RootState) => state.productReducer.products
   );
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const promise = dispatch(getproductList());
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch]);
 
   return (
     <div className="bg-gray-100">
