@@ -14,6 +14,7 @@ import { ProductType } from "src/types/product.type";
 export default function ProductDetail() {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewContent, setReviewContent] = useState("");
+  const [inputNumber, setInputNumber] = useState(1);
   const [product, setProduct] = useState<ProductType>({
     id: "",
     img: "",
@@ -27,10 +28,7 @@ export default function ProductDetail() {
   const products = useSelector(
     (state: RootState) => state.productReducer.products
   );
-
-  const [inputNumber, setInputNumber] = useState(1);
   const dispatch = useDispatch();
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -51,11 +49,11 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     const addProduct: CartType = {
-      id: product.id,
+      id: product?.id,
       img: product?.img,
-      name: product.name,
+      name: product?.name,
       quantity: inputNumber,
-      price: product.price,
+      price: product?.price,
     };
     toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
     dispatch(addToCart(addProduct));
@@ -80,14 +78,14 @@ export default function ProductDetail() {
   };
 
   const handleSubmitReview = () => {
-    const newId = postData.length + 1;
+    const newId = postData?.length + 1;
     const publishPost = {
       id: newId.toString(),
-      productId: product.id,
-      category: product.category,
+      productId: product?.id,
+      category: product?.category,
       name: reviewTitle,
       review: reviewContent,
-      img: product.img,
+      img: product?.img,
     };
     if (reviewTitle == "" && reviewContent == "") {
       toast.dark("Vui lòng điền đầy đủ thông tin");
@@ -153,6 +151,7 @@ export default function ProductDetail() {
                       </svg>
                     </button>
                     <input
+                      role="input_number"
                       type="text"
                       className="border border-l-0 border-r-0 text-center w-[40%] focus:border-transparent"
                       placeholder="1"
@@ -195,6 +194,7 @@ export default function ProductDetail() {
               </div>
               <div className="px-5 py-4 flex mt-8">
                 <button
+                  role="addToCart"
                   className="border border-[#d0011b] bg-[rgba(208,1,27,.08)] flex p-3 rounded-sm cursor-pointer"
                   onClick={handleAddToCart}
                 >
@@ -237,9 +237,10 @@ export default function ProductDetail() {
             <span className="text-xl mb-3 block">Đánh giá sản phẩm</span>
             <input
               type="text"
+              role="danhgia"
               placeholder="Tiêu đề bài đánh giá"
-              value={reviewTitle}
               onChange={handleReviewTitleChange}
+              value={reviewTitle}
               className="w-full border p-2 rounded-md mb-3"
             />
             <textarea
@@ -250,6 +251,7 @@ export default function ProductDetail() {
               className="w-full border p-2 rounded-md"
             />
             <button
+              role="submitReview"
               className="bg-[#D0011B] text-white px-10 py-3 mt-3 cursor-pointer"
               onClick={handleSubmitReview}
             >

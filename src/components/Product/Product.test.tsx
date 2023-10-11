@@ -32,7 +32,7 @@ test("Render trang Product", () => {
   expect(titleElement).toBeInTheDocument();
 });
 
-test("Tên của sản phẩm nên đươc hiển thị đúng", () => {
+test("Tên của sản phẩm nên đươc hiển thị đúng khi truyền data", () => {
   render(
     <BrowserRouter>
       <Provider store={store}>

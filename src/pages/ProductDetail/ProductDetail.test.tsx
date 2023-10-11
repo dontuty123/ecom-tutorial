@@ -2,7 +2,7 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "./../../redux/store";
+import { store } from "../../redux/store";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom";
 import ProductDetail from ".";
@@ -64,4 +64,87 @@ test("Nhập số lượng vào ô input", () => {
     fireEvent.change(getInputNumber, { target: { value: testValue } });
     expect(getInputNumber).toBe(testValue);
   });
+});
+
+test("Ô input chỉ nhận giá trị số", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <ProductDetail />;
+      </Provider>
+    </BrowserRouter>
+  );
+
+  waitFor(() => {
+    const getInputNumber = screen.getByRole("input_number");
+    const testValue = "123123123";
+
+    fireEvent.change(getInputNumber, { target: { value: testValue } });
+    expect(getInputNumber).toBe(testValue);
+  });
+});
+
+test("test function handleAddToCart", () => {
+  const handleAddToCartSpy = jest.fn();
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <ProductDetail />
+      </Provider>
+    </BrowserRouter>
+  );
+
+  const addToCart = screen.getByRole("addToCart");
+  fireEvent.click(addToCart);
+  expect(handleAddToCartSpy).toBeDefined();
+});
+
+test("test function handleReviewContentChange", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <ProductDetail />
+      </Provider>
+    </BrowserRouter>
+  );
+
+  const testValue = "test value";
+
+  const handleReviewContentChange = screen.getByPlaceholderText(
+    "Nội dung bài đánh giá"
+  );
+  fireEvent.change(handleReviewContentChange, { target: { value: testValue } });
+  expect(handleReviewContentChange.textContent).toBe(testValue);
+});
+
+test("test function handleReviewTitleChange", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <ProductDetail />
+      </Provider>
+    </BrowserRouter>
+  );
+
+  const testValue = "test value";
+
+  const handleReviewTitleChange = screen.getByRole("danhgia");
+  fireEvent.change(handleReviewTitleChange, { target: { value: testValue } });
+
+  expect(handleReviewTitleChange).toHaveValue(testValue);
+});
+
+test("test function handleAddToCart", () => {
+  const handleSubmitReviewSpy = jest.fn();
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <ProductDetail />
+      </Provider>
+    </BrowserRouter>
+  );
+
+  const submitReview = screen.getByRole("submitReview");
+  fireEvent.click(submitReview);
+  expect(handleSubmitReviewSpy).toBeDefined();
 });

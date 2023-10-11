@@ -19,7 +19,7 @@ test("Render trang post list", () => {
   expect(titleElement).toBeInTheDocument();
 });
 
-test("Tên của bài viết nên đươc hiển thị đúng", () => {
+test("Tên của bài viết nên đươc hiển thị đúng khi có data", () => {
   render(
     <BrowserRouter>
       <Provider store={store}>
@@ -41,6 +41,54 @@ test("Tên của bài viết nên đươc hiển thị đúng", () => {
         const titleElement = screen.getByText(item.name);
         expect(titleElement).toBeInTheDocument();
         expect(reviewElement).toBeInTheDocument();
+      });
+    },
+    { timeout: 1000 }
+  );
+});
+
+test("Tên của bài viết không hiển thị khi không có data", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <Post />
+      </Provider>
+    </BrowserRouter>
+  );
+
+  const mockData = [{ review: "", name: "" }];
+
+  waitFor(
+    () => {
+      mockData.forEach((item) => {
+        const reviewElement = screen.getByRole("item-review");
+        const titleElement = screen.getByRole("item-name");
+        expect(titleElement).toBe(item.name);
+        expect(reviewElement).toBe(item.review);
+      });
+    },
+    { timeout: 1000 }
+  );
+});
+
+test("Tên của bài viết không hiển thị khi không có data", () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <Post />
+      </Provider>
+    </BrowserRouter>
+  );
+
+  const mockData = [{}];
+
+  waitFor(
+    () => {
+      mockData.forEach(() => {
+        const reviewElement = screen.getByRole("item-review");
+        const titleElement = screen.getByRole("item-name");
+        expect(titleElement).not.toBeInTheDocument();
+        expect(reviewElement).not.toBeInTheDocument();
       });
     },
     { timeout: 1000 }

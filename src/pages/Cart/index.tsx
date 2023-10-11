@@ -93,6 +93,7 @@ export default function Cart() {
                       </div>
                       <div className="col-span-1">
                         <button
+                          role="del-item"
                           className="bg-none text-black transition-colors hover:text-orange"
                           onClick={() => handleRemoveFromCart(purchase.id)}
                         >

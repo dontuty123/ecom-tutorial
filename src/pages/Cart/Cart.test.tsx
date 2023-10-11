@@ -41,3 +41,29 @@ test("Render list item", () => {
   const cartElement = screen.getAllByRole("img");
   expect(cartElement).toHaveLength(cart.length);
 });
+
+// test("clicking remove button should trigger handleRemoveFromCart", () => {
+//   const mockData = [
+//     {
+//       id: "1",
+//       name: "Product 1",
+//       price: 100,
+//       quantity: 2,
+//       img: "image-1.jpg",
+//     },
+//   ];
+
+//   render(
+//     <BrowserRouter>
+//       <Provider store={store}>
+//         <Cart />;
+//       </Provider>
+//     </BrowserRouter>
+//   );
+
+//   mockData.forEach((item) => {
+//     const removeButton = screen.getByRole("del-item");
+//     fireEvent.click(removeButton);
+//     expect(removeButton).toHaveBeenCalledWith(item.id);
+//   });
+// });

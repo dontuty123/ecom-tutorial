@@ -27,14 +27,18 @@ export default function Post() {
         >
           <div className="w-[50%] h-[50vh] mb-10">
             <img
-              alt={item.name}
-              src={item.img}
+              alt={item?.name}
+              src={item?.img}
               className="w-full h-full mb-4 rounded-2xl shadow object-cover"
             />
           </div>
 
-          <h2 className="text-xl font-semibold text-gray-800">{item.name}</h2>
-          <p className="text-gray-600 mt-2 max-w-[70%]">{item.review}</p>
+          <h2 role="item-name" className="text-xl font-semibold text-gray-800">
+            {item?.name}
+          </h2>
+          <p role="item-review" className="text-gray-600 mt-2 max-w-[70%]">
+            {item?.review}
+          </p>
         </div>
       ))}
     </div>
