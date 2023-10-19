@@ -49,15 +49,21 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = () => {
-    const addProduct: CartType = {
-      id: product?.id,
-      img: product?.img,
-      name: product?.name,
-      quantity: inputNumber,
-      price: product?.price,
-    };
-    toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
-    dispatch(addToCart(addProduct));
+    if (inputNumber == 0) {
+      toast.warn("Vui lòng nhập số lượng sản phẩm cần mua");
+      toast.clearWaitingQueue();
+    } else {
+      const addProduct: CartType = {
+        id: product?.id,
+        img: product?.img,
+        name: product?.name,
+        quantity: inputNumber,
+        price: product?.price,
+      };
+      toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
+      toast.clearWaitingQueue();
+      dispatch(addToCart(addProduct));
+    }
   };
 
   //loại bỏ kí tự khác số
@@ -90,9 +96,11 @@ export default function ProductDetail() {
     };
     if (reviewTitle == "" && reviewContent == "") {
       toast.dark("Vui lòng điền đầy đủ thông tin");
+      toast.clearWaitingQueue();
     } else {
       dispatch(addPost(publishPost));
       toast.success("Đã thêm review thành công");
+      toast.clearWaitingQueue();
       setReviewTitle("");
       setReviewContent("");
     }
