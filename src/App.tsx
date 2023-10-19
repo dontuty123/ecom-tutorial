@@ -4,7 +4,6 @@ import useRouteElement from "./useRouteElement";
 
 function App() {
   const routeElement = useRouteElement();
-  toast.clearWaitingQueue();
 
   return (
     <div>

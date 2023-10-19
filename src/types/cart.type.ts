@@ -2,8 +2,16 @@
 
 export interface CartType {
   id: string;
-  name: string;
   quantity: number;
-  price: number;
-  img: string;
+  checked?:boolean
+  product: {
+      id: string;
+      img: string;
+      category: string;
+      name: string;
+      desc: string;
+      sold: number;
+      price: number;
+      inStock: number;
+  }
 }

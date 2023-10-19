@@ -34,34 +34,19 @@ const cartSlice = createSlice({
         state.cart.splice(checkInCart, 1);
       }
     },
+    updateCart: (state, action: PayloadAction<CartType>) => {
+      const productId = action.payload.product.id
+      const purchaseUpdate = action.payload
+      const indexToUpdate = state.cart.findIndex(item => item.product.id === productId)
+      state.cart[indexToUpdate] = purchaseUpdate
+    },
+    deleteMany: (state, action: PayloadAction<CartType[]>) => {
+      state.cart = action.payload
+    }
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart,updateCart, deleteMany } = cartSlice.actions;
 const cartReducer = cartSlice.reducer;
 
 export default cartReducer;
-
-// export const addToCart = createAction<CartType>("cart/addToCart");
-// export const removeFromCart = createAction<string>("cart/removeFromCart");
-
-// const cartReducer = createReducer(initialState, (builder) => {
-//   builder.addCase(addToCart, (state, action) => {
-//     const productAdded = action.payload;
-//     const checkInCart = state.cart.findIndex(
-//       (purchase) => purchase.id === productAdded.id
-//     );
-//     if (checkInCart != -1) {
-//       state.cart[checkInCart].quantity = state.cart[checkInCart].quantity + 1;
-//     } else {
-//       state.cart.push(productAdded);
-//     }
-//   });
-//   builder.addCase(removeFromCart, (state, action) => {
-//     const idInCart = action.payload;
-//     const checkInCart = state.cart.findIndex((item) => item.id === idInCart);
-//     if (checkInCart != -1) {
-//       state.cart.splice(checkInCart, 1);
-//     }
-//   });
-// });
