@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "src/redux/store";
 import { removeFromCart } from "src/redux/cart.slice";
+import { formatCurrency } from "src/utils/utils";
 
 export default function Cart() {
   const carts = useSelector((state: RootState) => state.cartReducer.cart);
@@ -18,7 +19,7 @@ export default function Cart() {
     for (const item of carts) {
       totalPrice += item.quantity * item.price;
     }
-    return totalPrice;
+    return formatCurrency(totalPrice);
   };
 
   return (
@@ -82,13 +83,15 @@ export default function Cart() {
                     <div className="grid grid-cols-5 items-center">
                       <div className="col-span-2">
                         <div className="flex items-center justify-center">
-                          <span className="ml-3">₫{purchase.price}</span>
+                          <span className="ml-3">
+                            ₫{formatCurrency(purchase.price)}
+                          </span>
                         </div>
                       </div>
                       <div className="col-span-1">{purchase.quantity}</div>
                       <div className="col-span-1">
                         <span className="text-orange">
-                          ₫{purchase.price * purchase.quantity}
+                          ₫{formatCurrency(purchase.price * purchase.quantity)}
                         </span>
                       </div>
                       <div className="col-span-1">

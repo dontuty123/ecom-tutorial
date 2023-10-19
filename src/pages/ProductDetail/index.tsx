@@ -10,6 +10,7 @@ import { addPost } from "src/redux/post.slice";
 import { RootState } from "src/redux/store";
 import { CartType } from "src/types/cart.type";
 import { ProductType } from "src/types/product.type";
+import { formatCurrency } from "./../../utils/utils";
 
 export default function ProductDetail() {
   const [reviewTitle, setReviewTitle] = useState("");
@@ -121,7 +122,9 @@ export default function ProductDetail() {
               </div>
               <div className="px-5 py-4 text-orange">
                 <span className="text-[24px]">₫</span>
-                <span className="text-[32px]">{product?.price}</span>
+                <span className="text-[32px]">
+                  {formatCurrency(product?.price)}
+                </span>
               </div>
               <div className="pt-4 grid grid-cols-8 px-5 text-gray-600">
                 <span className="col-span-2 text-base">Số lượng</span>
