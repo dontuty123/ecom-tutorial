@@ -1,11 +1,26 @@
 /** @format */
 
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { searchByName } from "src/redux/productList.slice";
 import { RootState } from "src/redux/store";
 
 export default function Header() {
   const cart = useSelector((state: RootState) => state.cartReducer.cart);
+  const [input, setInput] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const handleChangeInput = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(target.value);
+  };
+
+  useEffect(() => {
+    dispatch(searchByName(input));
+  }, [input]);
+
   return (
     <div className="pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white">
       <div className="container">
@@ -75,6 +90,8 @@ export default function Header() {
                 name="search"
                 className="text-black px-3 py-2 flex-grow border-none outline-none bg-transparent"
                 placeholder="Free Ship Đơn Từ 0Đ"
+                value={input}
+                onChange={handleChangeInput}
               />
               <button className="rounded-sm py-2 px-6 flex-shrink-0 bg-orange hover:opacity-90">
                 <svg
