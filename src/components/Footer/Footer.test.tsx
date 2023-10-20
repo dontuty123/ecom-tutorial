@@ -1,20 +1,12 @@
 /** @format */
 
-import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import { store } from "src/redux/store";
+import { screen } from "@testing-library/react";
 import Footer from ".";
 import "@testing-library/jest-dom";
+import { renderWithProviders } from "src/utils/test-utils";
 
 test("Render Cart Route", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Footer />
-      </Provider>
-    </BrowserRouter>
-  );
+  renderWithProviders(<Footer />);
   const cartElement = screen.getByText(/Tất cả các quyền được bảo lưu/i);
   expect(cartElement).toBeInTheDocument();
 });

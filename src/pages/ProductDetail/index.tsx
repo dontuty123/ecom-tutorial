@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { postData } from "src/mockdata/post";
 import { addToCart } from "src/redux/cart.slice";
@@ -33,6 +33,7 @@ export default function ProductDetail() {
   );
   const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const curProduct = products.find((item) => item.id === id);
@@ -56,12 +57,12 @@ export default function ProductDetail() {
       toast.clearWaitingQueue();
     } else {
       const addProduct: CartType = {
-        id: product?.id as string,
+        id: product?.id,
         quantity: inputNumber,
         product: {
           img: product?.img,
-          name: product?.name as string,
-          price: product?.price as number,
+          name: product?.name,
+          price: product?.price,
           category: product?.category,
           desc: product?.desc,
           id: product?.id,
@@ -72,6 +73,32 @@ export default function ProductDetail() {
       toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
       toast.clearWaitingQueue();
       dispatch(addToCart(addProduct));
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (inputNumber == 0) {
+      toast.warn("Vui lòng nhập số lượng sản phẩm cần mua");
+      toast.clearWaitingQueue();
+    } else {
+      const addProduct: CartType = {
+        id: product?.id,
+        quantity: inputNumber,
+        product: {
+          img: product?.img,
+          name: product?.name,
+          price: product?.price,
+          category: product?.category,
+          desc: product?.desc,
+          id: product?.id,
+          inStock: product?.inStock,
+          sold: product?.sold,
+        },
+      };
+      toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
+      toast.clearWaitingQueue();
+      dispatch(addToCart(addProduct));
+      navigate("/cart");
     }
   };
 
@@ -173,14 +200,12 @@ export default function ProductDetail() {
 
                   <span className="text-[#d0011b]">Thêm vào giỏ hàng</span>
                 </button>
-                <Link to="/cart">
-                  <button
-                    className="bg-[#D0011B] text-white px-10 py-3 ml-5 cursor-pointer"
-                    onClick={handleAddToCart}
-                  >
-                    Mua ngay
-                  </button>
-                </Link>
+                <button
+                  className="bg-[#D0011B] text-white px-10 py-3 ml-5 cursor-pointer"
+                  onClick={handleBuyNow}
+                >
+                  Mua ngay
+                </button>
                 <Link to={`/post/product/${product?.id}`}>
                   <button className="bg-[#D0011B] text-white px-10 py-3 ml-5 cursor-pointer">
                     Xem Review

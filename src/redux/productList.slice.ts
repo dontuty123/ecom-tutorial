@@ -15,7 +15,7 @@ const initialState: ProductsType = {
 };
 
 const productSlice = createSlice({
-  name: "post",
+  name: "PRODUCT",
   initialState,
   reducers: {
     searchByName: (state, action: PayloadAction<string>) => {

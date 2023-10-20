@@ -1,32 +1,18 @@
 /** @format */
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Post from "./index";
-import { Provider } from "react-redux";
-import { store } from "./../../redux/store";
-import { BrowserRouter } from "react-router-dom";
+import { renderWithProviders } from "src/utils/test-utils";
 
 test("Render trang post list", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Post />
-      </Provider>
-    </BrowserRouter>
-  );
-  const titleElement = screen.getByText(/Chi tiết Bài viết/i);
-  expect(titleElement).toBeInTheDocument();
+  renderWithProviders(<Post />);
+  const titleElement = screen.getByRole("title");
+  expect(titleElement.textContent).toBe("Chi tiết Bài viết");
 });
 
 test("Tên của bài viết nên đươc hiển thị đúng khi có data", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Post />
-      </Provider>
-    </BrowserRouter>
-  );
+  renderWithProviders(<Post />);
 
   const mockData = [
     { name: "name1", review: "review123" },
@@ -48,13 +34,7 @@ test("Tên của bài viết nên đươc hiển thị đúng khi có data", () 
 });
 
 test("Tên của bài viết không hiển thị khi không có data", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Post />
-      </Provider>
-    </BrowserRouter>
-  );
+  renderWithProviders(<Post />);
 
   const mockData = [{ review: "", name: "" }];
 
@@ -72,13 +52,7 @@ test("Tên của bài viết không hiển thị khi không có data", () => {
 });
 
 test("Tên của bài viết không hiển thị khi không có data", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Post />
-      </Provider>
-    </BrowserRouter>
-  );
+  renderWithProviders(<Post />);
 
   const mockData = [{}];
 

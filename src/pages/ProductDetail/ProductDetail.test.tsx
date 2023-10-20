@@ -2,7 +2,7 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "../../redux/store";
+import { setupStore } from "../../redux/store";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom";
 import ProductDetail from ".";
@@ -21,7 +21,7 @@ const product = {
 test("Render product detail Route", () => {
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />;
       </Provider>
     </BrowserRouter>
@@ -36,7 +36,7 @@ test("Render product detail Route", () => {
 test("Render list post", () => {
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />;
       </Provider>
     </BrowserRouter>
@@ -51,7 +51,7 @@ test("Render list post", () => {
 test("Nhập số lượng vào ô input", () => {
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />;
       </Provider>
     </BrowserRouter>
@@ -69,7 +69,7 @@ test("Nhập số lượng vào ô input", () => {
 test("Ô input chỉ nhận giá trị số", () => {
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />;
       </Provider>
     </BrowserRouter>
@@ -88,7 +88,7 @@ test("test function handleAddToCart", () => {
   const handleAddToCartSpy = jest.fn();
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />
       </Provider>
     </BrowserRouter>
@@ -102,7 +102,7 @@ test("test function handleAddToCart", () => {
 test("test function handleReviewContentChange", () => {
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />
       </Provider>
     </BrowserRouter>
@@ -120,7 +120,7 @@ test("test function handleReviewContentChange", () => {
 test("test function handleReviewTitleChange", () => {
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />
       </Provider>
     </BrowserRouter>
@@ -138,7 +138,7 @@ test("test function handleAddToCart", () => {
   const handleSubmitReviewSpy = jest.fn();
   render(
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <ProductDetail />
       </Provider>
     </BrowserRouter>

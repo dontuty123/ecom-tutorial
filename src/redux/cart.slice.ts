@@ -13,7 +13,7 @@ const initialState: CartsType = {
 };
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: "CART",
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartType>) => {
@@ -22,7 +22,7 @@ const cartSlice = createSlice({
         (purchase) => purchase.id === productAdded.id
       );
       if (checkInCart != -1) {
-        state.cart[checkInCart].quantity = state.cart[checkInCart].quantity + 1;
+        state.cart[checkInCart].quantity =state.cart[checkInCart].quantity + productAdded.quantity;
       } else {
         state.cart.push(productAdded);
       }

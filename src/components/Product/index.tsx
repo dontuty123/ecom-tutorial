@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 import { ProductType } from "src/types/product.type";
-import { formatCurrency } from "./../../utils/utils";
+import { formatCurrency } from "src/utils/utils";
 
 interface PropType {
   product: ProductType;
@@ -20,7 +20,9 @@ export default function Product({ product }: PropType) {
           />
         </div>
         <div className="p-2">
-          <div className="text-sm line-clamp-2 mb-5">{product.name}</div>
+          <div role="name" className="text-sm line-clamp-2 mb-5">
+            {product.name}
+          </div>
           <div className="justify-between px-1 flex truncate">
             <div className="text-orange">
               <span className="text-xs">₫</span>

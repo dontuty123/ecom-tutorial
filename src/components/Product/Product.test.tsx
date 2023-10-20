@@ -1,11 +1,9 @@
 /** @format */
 
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Product from "./index";
-import { Provider } from "react-redux";
-import { store } from "./../../redux/store";
-import { BrowserRouter } from "react-router-dom";
+import { renderWithProviders } from "src/utils/test-utils";
 
 const mockData = {
   id: "1",
@@ -20,27 +18,35 @@ const mockData = {
   inStock: 15,
 };
 
+const mockDataInit = {
+  id: "",
+  img: "",
+
+  category: "",
+  name: "",
+  desc: "",
+  sold: 0,
+
+  price: 0,
+  inStock: 0,
+};
+
 test("Render trang Product", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Product product={mockData} />
-      </Provider>
-    </BrowserRouter>
-  );
+  renderWithProviders(<Product product={mockData} />);
   const titleElement = screen.getByText(/₫/i);
   expect(titleElement).toBeInTheDocument();
 });
 
 test("Tên của sản phẩm nên đươc hiển thị đúng khi truyền data", () => {
-  render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <Product product={mockData} />
-      </Provider>
-    </BrowserRouter>
-  );
+  renderWithProviders(<Product product={mockData} />);
 
   const titleElement = screen.getByText(`${mockData.name}`);
   expect(titleElement).toBeInTheDocument();
+});
+
+test("Product undefined", () => {
+  renderWithProviders(<Product product={mockDataInit} />);
+
+  const titleElement = screen.getByRole("name");
+  expect(titleElement.ariaValueText).toBeUndefined();
 });

@@ -17,5 +17,4 @@ export const cart = [
       inStock: 15,
     }
   },
-
 ];

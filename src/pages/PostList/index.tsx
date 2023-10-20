@@ -69,7 +69,10 @@ export default function PostList() {
               className="w-full h-48 object-cover"
             />
             <div className="p-4">
-              <h2 className="text-xl font-semibold text-gray-800 truncate">
+              <h2
+                role="h2test"
+                className="text-xl font-semibold text-gray-800 truncate"
+              >
                 {item.name}
               </h2>
               <p className="text-gray-600 mt-2 truncate">{item.review}</p>

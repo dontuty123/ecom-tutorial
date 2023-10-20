@@ -13,7 +13,7 @@ const initialState: PostsType = {
 };
 
 const postSlice = createSlice({
-  name: "post",
+  name: "POST",
   initialState,
   reducers: {
     addPost: (state, action: PayloadAction<PostType>) => {
