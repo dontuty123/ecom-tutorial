@@ -13,11 +13,14 @@ import { ProductType } from "src/types/product.type";
 import { formatCurrency } from "./../../utils/utils";
 import InputNumber from "src/components/InputNumber";
 import { PostType } from "src/types/post.type";
+import classNames from "classnames";
 
 export default function ProductDetail() {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewContent, setReviewContent] = useState("");
   const [inputNumber, setInputNumber] = useState(1);
+  const [disable, setDisable] = useState(false);
+
   const [product, setProduct] = useState<ProductType>({
     id: "",
     img: "",
@@ -52,9 +55,10 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = () => {
+    toast.dismiss();
+
     if (inputNumber == 0) {
       toast.warn("Vui lòng nhập số lượng sản phẩm cần mua");
-      toast.clearWaitingQueue();
     } else {
       const addProduct: CartType = {
         id: product?.id,
@@ -71,15 +75,19 @@ export default function ProductDetail() {
         },
       };
       toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
-      toast.clearWaitingQueue();
       dispatch(addToCart(addProduct));
+      setDisable(true);
+      setTimeout(() => {
+        setDisable(false);
+      }, 1500);
     }
+    toast.clearWaitingQueue();
   };
 
   const handleBuyNow = () => {
+    toast.dismiss();
     if (inputNumber == 0) {
       toast.warn("Vui lòng nhập số lượng sản phẩm cần mua");
-      toast.clearWaitingQueue();
     } else {
       const addProduct: CartType = {
         id: product?.id,
@@ -96,10 +104,10 @@ export default function ProductDetail() {
         },
       };
       toast.success("Đã thêm sản phẩm vào giỏ hàng thành công");
-      toast.clearWaitingQueue();
       dispatch(addToCart(addProduct));
       navigate("/cart");
     }
+    toast.clearWaitingQueue();
   };
 
   //handle Review
@@ -127,6 +135,10 @@ export default function ProductDetail() {
     };
     if (reviewTitle == "" && reviewContent == "") {
       toast.dark("Vui lòng điền đầy đủ thông tin");
+      setDisable(true);
+      setTimeout(() => {
+        setDisable(false);
+      }, 1500);
       toast.clearWaitingQueue();
     } else {
       dispatch(addPost(publishPost as PostType));
@@ -174,13 +186,21 @@ export default function ProductDetail() {
                     limit={product?.inStock as number}
                     setInputNumber={setInputNumber}
                   />
-                  <div className="col-span-1 text-sm">6 sản phẩm có sẵn</div>
+                  <div className="col-span-1 text-sm">
+                    {product.inStock} sản phẩm có sẵn
+                  </div>
                 </div>
               </div>
               <div className="px-5 py-4 flex mt-8">
                 <button
+                  disabled={disable}
                   role="addToCart"
-                  className="border border-[#d0011b] bg-[rgba(208,1,27,.08)] flex p-3 rounded-sm cursor-pointer"
+                  className={classNames(
+                    "border border-[#d0011b] bg-[rgba(208,1,27,.08)] flex p-3 rounded-sm cursor-pointer",
+                    {
+                      "!cursor-not-allowed": disable,
+                    }
+                  )}
                   onClick={handleAddToCart}
                 >
                   <svg
@@ -234,8 +254,14 @@ export default function ProductDetail() {
               className="w-full border p-2 rounded-md"
             />
             <button
+              disabled={disable}
               role="submitReview"
-              className="bg-[#D0011B] text-white px-10 py-3 mt-3 cursor-pointer"
+              className={classNames(
+                "bg-[#D0011B] text-white px-10 py-3 mt-3 cursor-pointer",
+                {
+                  "!cursor-not-allowed": disable,
+                }
+              )}
               onClick={handleSubmitReview}
             >
               Đăng đánh giá

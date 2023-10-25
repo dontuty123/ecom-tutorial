@@ -1,5 +1,5 @@
 /** @format */
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import useRouteElement from "./useRouteElement";
 
 function App() {

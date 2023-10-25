@@ -11,10 +11,15 @@ export default function Header() {
   const [input, setInput] = useState<string>("");
   const dispatch = useDispatch();
 
-  const handleChangeInput = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(target.value);
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      console.log("Enter key pressed in input field");
+    }
   };
 
   useEffect(() => {
@@ -92,6 +97,7 @@ export default function Header() {
                 className="text-black px-3 py-2 flex-grow border-none outline-none bg-transparent"
                 placeholder="Free Ship Đơn Từ 0Đ"
                 value={input}
+                onKeyDown={handleKeyDown}
                 onChange={handleChangeInput}
               />
               <button className="rounded-sm py-2 px-6 flex-shrink-0 bg-orange hover:opacity-90">
